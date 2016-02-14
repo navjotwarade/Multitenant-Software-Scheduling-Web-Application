@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+ <meta charset="utf-8">
+<base href="http://teamproject14-cmpe281team14.rhcloud.com/" target="_blank"/>
+<title>Multi-Tenant-Team14\Login</title>
+<script type="text/javascript" src="angular.js"></script>
+<div id="divHeader"
+		style="width: 1200px; height: 70px; float: left; background-color: black;">
+		<h4 id="Welcome" style="color: White; float: left; width: 30%; text-align: left;"></h4>
+		<h3 style="color: White; float: left; width: 40%; text-align: center;">Multi-Tenant Project
+			</h3>
+		<h4 style="color: White; float: left; width: 30%; text-align: center;">
+			<a style="color: White;" href="/">About</a>
+		</h4>
+		<h4 style="color: White; float: left; width: 30%; text-align: center;">
+			<a style="color: White;" href="/user">Create User</a>
+		</h4>
+		
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!-- <script type="text/javascript" src="login.js"></script> -->
+<style>
+body {
+    background-color: #b0c4de;
+}
+</style>
+ 
+</head>
+
+<body ng-app='login' ng-strict-di>
+    
+	<br><br><br>
+   
+  <div  ng-controller='loginController'class="panel panel-primary">
+      <div class="panel-heading">Login:</div>
+      <br><br>
+<form>
+  <p>
+    <label>Username:</label>
+    <input type="text" name="username" ng-model = "username">
+  </p>
+  <p>
+    <label>Password:</label>
+    <input type="password" name="password" ng-model="password">
+  </p>
+  <p>
+              
+    <input type="submit" class="btn btn-primary btn-md" ng-click ="login()" value="login" ng-model="password">
+    
+  </p>
+</form>
+</div>
+  </body>
+  <footer>
+  <p>Posted by: Team 14</p>
+  <p>Contact information: <a href="mailto:team14wale@example.com">
+  multi-tenantSaaS@cloud.com</a>.</p>
+</footer>
+  <script>
+    console.log(angular);
+     angular.module('app.config',[])
+    .value('app.config', {
+      //<base href="http://teamproject14-cmpe281team14.rhcloud.com/" target="_blank"/>
+      basePath: 'http://teamproject14-cmpe281team14.rhcloud.com/' // Set your base path here
+    });
+    
+    angular.module('login',['app.config']).controller('loginController',loginController);
+    
+    loginController.$inject = ['$scope','$http','$window','app.config'];
+    
+     function loginController($scope,$http,$window,config){
+        $scope.formData = {};
+        $scope.login = function(){
+             $window.alert("username" + $scope.username + "password"+ $scope.password);
+             var loginURL  = config.basePath+'login';
+             $window.alert(loginURL);
+            $http({
+                method:'POST',
+                url:loginURL,
+                data:{"usr":$scope.username,"password":$scope.password}}).success(function(response){
+                    $window.alert(response);
+                    $window.sessionStorage["username"]=JSON.stringify($scope.username);
+                    $window.sessionStorage["password"]=JSON.stringify($scope.password);
+                //    alert($window.sessionStorage["username"]);
+	            $window.location.assign('/userHome');
+	            // $window.location.reload();
+	         });
+        }
+    }
+    
+
+   
+ 
+   
+  
+  /* var myApp = angular.module('myApp',['ngRoute',loginController]);
+   myApp.config(['routeProvider',function($routeProvider){
+    $routeProvider.when();   
+   }]);*/
+     /*angular.element(document).ready(function() {
+      angular.bootstrap(document, ['login']);
+    });*/
+</script>
+ </html>
+ 

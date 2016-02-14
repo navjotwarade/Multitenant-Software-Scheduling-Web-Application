@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <base href="teamproject14-cmpe281team14.rhcloud.com/" target="_blank"/>
+<meta charset="utf-8">
+<title>Multi-Tenant-Team14\Login</title>
+<script type="text/javascript" src="angular.js"></script>
+<!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<script type="text/javascript" src="login.js"></script>
+<div id="divHeader"
+		style="width: 1200px; height: 70px; float: left; background-color: black;">
+		<h4 id="Welcome" style="color: White; float: left; width: 30%; text-align: left;"></h4>
+		<h3 style="color: White; float: left; width: 40%; text-align: center;">Multi-Tenant Project
+			</h3>
+		<h4 style="color: White; float: left; width: 30%; text-align: center;">
+			<a style="color: White;" href="/">Sign out</a>
+		</h4>
+		
+		
+</div>
+</head>
+<style>
+body {
+    background-color: #b0c4de;
+}
+</style>
+<body ng-app='createUser' ng-strict-di>
+   <div class="panel-heading">Create User:</div>
+  <div ng-view="" ng-controller='createUserController' class="panel panel-primary">
+<form>
+  <p>
+    <label>Enter your emailId:</label>
+    <input type="text" name="username" ng-model="username">
+  </p>
+  <p>
+    <label>Enter your Password:</label>
+    <input type="password" name="password" ng-model="password">
+  </p>
+   <p>
+    <select ng-model="method">
+        <option value="Waterfall">Waterfall</option>
+        <option value="Kanban">Kanban</option>
+        <option value="Scrum">Scrum</option>
+    </select>
+    <input type="hidden" name="method" ng-value="{{method}}" />
+   </p>
+    <p>
+    <select ng-model="role">
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+    </select>
+     <input type="hidden" name="role" ng-value="{{role}}" />
+   </p>
+  <p>
+    <input type="submit" class="btn btn-primary btn-md" ng-click ="createUser()" value="create User">
+  </p>
+</form>
+</div>
+  </body>
+  <script>
+      function createUserController($scope,$http,$window){
+        $scope.createUser = function(){
+            $window.alert("username" + $scope.username + "password"+ $scope.password + "method"+$scope.method
+            +"role"+$scope.role);
+            
+            $http({
+                method:'POST',
+                url:'/createUser',
+                data:{"email":$scope.username, "password":$scope.password ,"method":$scope.method,
+            "role":$scope.role}}).success(function(response){
+	             $window.alert("The User is created with following Detils"+JSON.stringify(response));
+	             $window.location='/';
+	             
+	         });
+	         
+        }
+    }
+    
+    
+    createUserController.$inject = ['$scope','$http','$window'];
+   angular.module('createUser',[]).controller('createUserController',createUserController);
+  </script>
+  </html>
