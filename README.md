@@ -60,3 +60,17 @@ up for the application. After he signs up for the application he gets a preferen
 page where he will be able to set up his choice for either of the Saas 
 applications. The design is such that it will automatically render the data 
 elements and schemas based on the user’s selection.
+
+###Technology Stack:
+
+1. Node.js: The javascript server side technology which is highly efficient for 
+highly resource intensive web applications is chosen for coding the business tier.
+
+2. Angular.js: A powerful javascript binding framework based on MVC, works 
+well with server side components working with JSON (Node.js in this case).
+
+3. Mongo DB: A No-Sql storage stores data in the BSON format, also faster for 
+consistency and transaction.
+
+4. Redis Cache: A fast in-memory database will be used for object caching in EC2 
+instance, can also work in distributed mode.
